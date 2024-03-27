@@ -42,13 +42,16 @@ function CohortDetailsPage() {
     setLoading(false);
   }, [cohortId, getCohort, getStudents]);
 
+  console.log(cohort);
+  console.log(students);
+
   return (
     <div className={`CohortDetails bg-gray-100 py-6 px-4`}>
       {/* Drawer */}
       <div
-className={`drawer transition-transform transform ${
-       showDrawer ? "translate-x-0" : "translate-x-full"
-     } fixed right-0 top-0 h-full bg-white shadow-md z-10`}
+        className={`drawer transition-transform transform ${
+          showDrawer ? "translate-x-0" : "translate-x-full"
+        } fixed right-0 top-0 h-full bg-white shadow-md z-10`}
       >
         {cohort && showDrawer && (
           <StudentCreateForm
@@ -62,7 +65,6 @@ className={`drawer transition-transform transform ${
           />
         )}
       </div>
-
 
       <div
         className={`CohortDetails bg-gray-100 py-6 px-4 ${
@@ -143,10 +145,13 @@ className={`drawer transition-transform transform ${
 
         {loading && <div>Loading...</div>}
 
-        {students &&
+        {Array.isArray(students) ? (
           students.map((student) => (
             <StudentCard key={student._id} {...student} />
-          ))}
+          ))
+        ) : (
+          <div>No students found.</div>
+        )}
       </div>
     </div>
   );
